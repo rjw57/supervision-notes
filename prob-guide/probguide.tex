@@ -1,4 +1,8 @@
 \documentclass[a4paper]{article}
+\usepackage{xcolor,geometry,palatino}
+\addtolength{\parskip}{0.5\baselineskip}
+\setlength{\parindent}{0pt}
+
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{times}
@@ -6,7 +10,11 @@
 
 \usetikzlibrary{arrows,automata}
 
+\title{Notes on Probability}
+\author{Rich Wareham}
+
 \begin{document}
+\maketitle
 
 \section{What is a `probability'?}
 
@@ -144,7 +152,7 @@ hand makes with the vertical', or $A$. Again consider the frequentist approach.
 
 \item There is one and only one case when $A = a$ so $n(A = a) = 1$.
 
-\item There are an infinity of angles which are not $a$ do $n(A \ne a) = \infty$.
+\item There are an infinity of angles which are not $a$ so $n(A \ne a) = \infty$.
 
 \item Hence $P(A = a) = 1 / \infty = 0$.
 
