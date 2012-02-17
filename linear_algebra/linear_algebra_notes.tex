@@ -23,7 +23,10 @@ gives a $1 \times M$ vector which is the dot product of $\vec{x}$ with the
 
 \[
 \begin{array}{cccc}
-\left[ \begin{array}{cccc} x_1 & x_2 & \cdots & x_N \end{array} \right] &
+\left[
+  \begin{array}{cccc}
+    \hmatrixrule & \vec{x} & \hmatrixrule 
+  \end{array} \right] &
 \left[
 	\begin{array}{cccc}
 		\vmatrixrule & \vmatrixrule &  & \vmatrixrule \\[1ex]
@@ -58,13 +61,15 @@ gives a $N \times 1$ vector which is the dot product of $\vec{x}$ with the
 \right] &
 \left[
 	\begin{array}{c}
-		x_1 \\ x_2 \\ \vdots \\ x_M
+		\vmatrixrule \\[1ex]
+		\vec{x} \\[1ex]
+		\vmatrixrule 
 	\end{array}
 \right] &
 = &
 \left[
 	\begin{array}{c}
-		\vec{x} \cdot \vec{a}_1 \\ \vec{x} \cdot \vec{a}_2 \\ \vdots \\ \vec{x} \cdot \vec{a}_N
+		\vec{a}_1 \cdot \vec{x} \\ \vec{a}_2 \cdot \vec{x} \\ \vdots \\ \vec{a}_N \cdot \vec{x}
 	\end{array}
 \right]
 \\
