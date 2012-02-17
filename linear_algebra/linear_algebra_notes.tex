@@ -1,7 +1,9 @@
 \documentclass[a4paper]{article}
 \usepackage{xcolor,geometry,palatino}
 
-\geometry{hmargin=0.75in,vmargin=1in}
+\addtolength{\parskip}{0.5\baselineskip}
+\setlength{\parindent}{0pt}
+%\geometry{hmargin=0.75in,vmargin=1in}
 
 \title{Notes on Linear Algebra}
 \author{Rich Wareham}
@@ -72,9 +74,9 @@ gives a $N \times 1$ vector which is the dot product of $\vec{x}$ with the
 \end{array}
 \]
 
-\section{The four fundamental subspaces}
+\subsection{The four fundamental subspaces}
 
-\subsection{The row space}
+\subsubsection{The row space}
 
 The row space of a $N \times M$ matrix, $A$, is \highlight{the $M$-component space
 spanned by the \emph{rows} of $A$}. If $\vec{x}$ is in the row space of $A$
@@ -82,7 +84,7 @@ then at least one of $\vec{x} \cdot \vec{a}_i$, where $\vec{a}_i$ is a row of
 $A$, \emph{must} be non-zero by definition. \highlight{The \emph{dimension} of the row
 space is equal to the rank of the matrix.}
 
-\subsection{The null space}
+\subsubsection{The null space}
 
 The null space of a $N \times M$ matrix, $A$, is the \highlight{$M$-component} space of
 vectors, $\vec{x}$, for which \highlight{$A\vec{x} = \vec{0}$}. Looking at our
@@ -90,7 +92,7 @@ definition of the row space, it is clear that if a vector is in the row space
 it \emph{cannot} be in the null space and \emph{vice versa}. Therefore the row
 space is the \emph{compliment} of the row space.
 
-\subsection{The column space}
+\subsubsection{The column space}
 
 The column space of a $N \times M$ matrix, $A$, is \highlight{the $N$-component
 space spanned by the \emph{columns} of $A$}. If $\vec{x}$ is in the column
@@ -98,13 +100,20 @@ space of $A$ then at least one of $\vec{x} \cdot \vec{a}_i$, where $\vec{a}_i$
 is a column of $A$, \emph{must} be non-zero by definition. \highlight{The
 \emph{dimension} of the column space is equal to the rank of the matrix.}
 
-\subsection{The left null space}
+\subsubsection{The left null space}
 
 The left null space of a $N \times M$ matrix, $A$, is the \highlight{$N$-component}
 space of vectors, $\vec{x}$, for which \highlight{$\vec{x}^TA = \vec{0}^T$}. Looking
 at our definition of the column space, it is clear that if a vector is in the
 column space it \emph{cannot} be in the left null space and \emph{vice versa}.
 Therefore the column space is the \emph{compliment} of the left null space.
+
+\subsubsection{The rank of a matrix}
+
+The rank of a matrix is an important concept. As we have seen, if a matrix is
+not \emph{full-rank} then the left-null space and null space must be non-zero
+and so some information from a vector will always be `thrown away' (or set to
+zero) by the matrix.
 
 \section{Matrix-matrix multiplication}
 
@@ -147,20 +156,37 @@ row-wise and column-wise operations.
 An orthonormal matrix is one where all columns are \highlight{independent} and
 \highlight{have unit length}. If $\{ \vec{a}_i : i \in 1 \dots M \}$ are the
 columns of an orthonormal matrix then it follows from the definition that
-\highlight{\[
+\[\highlight{
   \vec{a}_i \cdot \vec{a}_i = 1, \quad \vec{a}_i \cdot \vec{a}_j = 0 \qquad
-  \forall i, j \in 1 \dots M.
-\]}
+  \forall \  i, j \in 1 \dots M.
+}\]
 By using this result and looking at our representation of matrix-matrix
 multiplication above it should be clear that, if $Q$ is an orthonormal matrix,
 $Q^TQ = I$ and hence \highlight{the transpose of an orthonormal matrix is its
 inverse}.
+
+\subsubsection{The rows of $Q$}
 
 Further, if $Q^T$ is the inverse of $Q$, then $QQ^T = I$ and hence $Q^T$ must
 itself be orthonormal. Since, by definition of an orthonormal matrix, the columns
 of $Q^T$ are independent and have unit length then it follows that
 \highlight{the rows of an orthonormal matrix are \emph{also} independent and
 unit length}.
+
+\subsubsection{The geometric interpretation of orthonormal matrices}
+
+The geometric interpretation of the action of an orthonormal matrix can easily
+be seen by considering the actions of an $N \times M$ orthonormal matrix $Q$
+with \emph{rows} $\{ \vec{q}_i : i \in 1 \dots M \}$ on a $M \times 1$ vector
+$\vec{x}$. Each component of $Q\vec{x}$ is $\vec{x}$ \emph{resolved} onto one of
+the rows of $Q$. Since the rows of $Q$ are independent and have unit length,
+this results in a change of co-ordinates for $\vec{x}$, resolving it onto the
+basis formed by the rows of $Q$.  In summary, \highlight{an $N \times M$
+orthonormal matrix resolved a $M$-component vector into a $N$-dimensional
+subspace} and \highlight{a square orthonormal matrix transforms from one
+co-ordinate system to another without a loss of information}. This last
+statement also justifies our implicit assertion above that all square
+orthonormal matrices are invertible.
 
 \section{Eigenvalues and eigenvectors}
 
@@ -190,23 +216,26 @@ could represent one as some offset from the other: $\vec{e}_2 = \alpha \vec{e}_1
 + \vec{\Delta}$ where $\vec{e}_1 \cdot \vec{\Delta} = 0$.  Now consider
 multiplying $A$ on the right be $\vec{e}_2$:
 
-\begin{centering}
-\parbox{0.3\columnwidth}{\centering
+\begin{centering}\begin{tabular}{rl}
+\parbox{0.4\columnwidth}{\centering
 \begin{eqnarray}
   A \vec{e}_2 &=& \lambda_2 \vec{e}_2 \nonumber \\
   &=& \lambda_2 \alpha \vec{e}_1 + \lambda_2 \vec{\Delta} \label{eqn:res-1}
 \end{eqnarray}\\
-}\parbox{0.3\columnwidth}{\centering
+}&
+\parbox{0.4\columnwidth}{\centering
 \begin{eqnarray}
   A \vec{e}_2 &=& A \vec{e}_1 + A \vec{\Delta} \nonumber \\
   &=& \lambda_1 \vec{e}_1 + A \vec{\Delta} \label{eqn:res-2}
 \end{eqnarray}\\
 }\\
+\end{tabular}
 \end{centering}
 
-By (\ref{eqn:res-1}), (\ref{eqn:res-2}) and the orthogonality of $\vec{e}_1$ and
-$\vec{\Delta}$ it follows that $A\vec{\Delta} = \lambda_2 \vec{\Delta}$.  Hence,
-by definition, $\vec{e}_2 = \vec{\Delta}$ and is orthogonal to $\vec{e}_1$.
+\noindent By (\ref{eqn:res-1}), (\ref{eqn:res-2}) and the orthogonality of
+$\vec{e}_1$ and $\vec{\Delta}$ it follows that $A\vec{\Delta} = \lambda_2
+\vec{\Delta}$.  Hence, by definition, $\vec{e}_2 = \vec{\Delta}$ and is
+orthogonal to $\vec{e}_1$.
 
 This is a sketch proof and is non-rigorous but provides a justification for the
 claim that \highlight{the eigenvectors of a symmetric matrix are orthogonal}. A
@@ -252,24 +281,51 @@ columns are eigenvectors of $AA^T$ then, by definition,
   A^TA V = V \Lambda_V, \qquad AA^T U = U \Lambda_U,
 \]
 where $\Lambda_V$ and $\Lambda_U$ are matrices whose diagonal elements
-containing the appropriate eigenvalues. Since we know that $V$ and $U$ are
-orthonormal, their inverses must be their own transpose and so we can rearrange
-the above as follows:
-\[
-  \highlight{A^TA = V \Lambda_V V^T, \qquad AA^T = U \Lambda_U U^T}.
-\]
-This is called the \emph{eigenvector decomposition} of $A$. It is perhaps
-unsurprising that it can be shown that \highlight{the eigenvalues of $AA^T$ and
-$A^TA$ are identical} and hence we can choose the ordering of $U$ and $V$ so as
-to make the diagonal terms of $\Lambda_U$ and $\Lambda_V$ identical. The way
-this is done is that, conventionally, \highlight{the columns of $U$ and $V$ are
-ordered by decreasing eigenvalue}.
+containing the appropriate eigenvalues. The size of $\Lambda_U$ and $\Lambda_V$
+depend on the \emph{ranks} of $AA^T$ and $A^TA$ respectively. If you look up the
+properties of ranks, you'll discover that the ranks of $A^TA$ and $AA^T$ are
+equal to the rank of $A$. Let's call it $R$. In this case, therefore,
+\highlight{the matrices $\Lambda_U$ and $\Lambda_V$ are $R \times R$, where $R =
+\mbox{rank}(A)$}.
 
-We have carefully avoided specifying the size of $\Lambda_U$ and $\Lambda_V$.
-Since the eigenvalues of $A^TA$ and $AA^T$ are equal, the \emph{rank} of $A^TA$
-must be equal to that of $AA^T$. Let this rank be $R$. If the rank is $R$, there
-are $R$ eigenvectors and so \highlight{$\Lambda_V$ and $\Lambda_U$ are $R \times
-R$}.
+Since we know that $V$ and $U$ are orthonormal, their inverses must be their own
+transpose and so we can rearrange the above as follows:
+\[
+  A^TA = V \Lambda_V V^T, \qquad AA^T = U \Lambda_U U^T.
+\]
+This is called the \emph{eigenvector decomposition} of $A$. 
+
+\subsubsection{Eigenvalues of $AA^T$ and $A^TA$}
+
+Imagine, for the moment, that $\vec{v}$ is an eigenvector of $A^TA$ with
+associated eigenvalue $\lambda_v$.
+Then, by the definition,
+\[
+  A^TA\vec{v} = \lambda_v \vec{v}
+  \quad \Rightarrow \quad
+  AA^TA\vec{v} = \lambda_v A\vec{v}.
+\]
+Hence if $\vec{v}$ is an eigenvector or $A^TA$, then $A\vec{v}$ is an
+eigenvector of $AA^T$ with the same eigenvalue. Similarly, if $\vec{u}$ is an
+eigenvector of $AA^T$ then $A^T\vec{u}$ is an eigenvector of $A^TA$ with the
+same eigenvalue. In summary, \highlight{the eigenvalues of $A^TA$ and $AA^T$ are
+identical}.
+
+Because of this, we can always \emph{choose} the ordering of $U$ and $V$ so as
+to make the diagonal terms of $\Lambda_U$ and $\Lambda_V$ identical and hence
+make both matrices equal to some diagonal matrix $\Lambda$. The way this is done
+is that, conventionally, \highlight{the columns of $U$ and $V$ are ordered by
+decreasing eigenvalue}.
+
+In summary, when the columns of $U$ and $V$ are arranged in decreasing order of
+eigenvalue, we may form two related eigenvector decompositions of $A$:
+\[
+  \highlight{A^TA = V \Lambda V^T, \qquad AA^T = U \Lambda U^T}.
+\]
+Since each eigenvector of $AA^T$ maps to an eigenvector of $A^TA$ and
+vice-versa, we can be confident that the ranks of $AA^T$ and $A^TA$ are
+identical. This is yet more justification of the assertion about the sizes of
+$\Lambda_U$ and $\Lambda_V$ above.
 
 \subsection{The singular value decomposition}
 
@@ -290,13 +346,29 @@ $\Sigma \Sigma^T = \Lambda_U$ then we have exactly the eigenvector
 decomposition.
 
 The decomposition $A = U \Sigma V^T$ is called the \emph{singular value
-decomposition}. \highlight{The columns of the matrices $U$ and $V$ are the
+decomposition} (SVD). \highlight{The columns of the matrices $U$ and $V$ are the
 eigenvectors of $AA^T$ and $A^TA$ respectively} ordered by decreasing
 eigenvalue. \highlight{The diagonal elements of $\Sigma$ are the square-roots of
 the eigenvalues of $AA^T$ or $A^TA$}, they are identical, again arranged in
 decreasing order diagonally. The non-zero elements of $\Sigma$ are called the
 singular values and \highlight{the number of singular values is equal to the
 rank of $A$}.
+
+\subsubsection{The geometric interpretation of the SVD}
+
+We can interpret the SVD of a $N \times M$ matrix geometrically. The action of
+the first orthonormal matrix $V^T$ is to transform a $M$-component vector into a
+$R$-dimensional subspace. This will lose information if $R < M$. In this
+subspace, the action of the matrix $A$ is to scale along each of the basis
+vectors by the values of the diagonal of $\Sigma$. Finally, the orthonormal
+matrix $U$ transforms from the $R$-dimensional subspace into the $U$-component
+space we expect the result to be in. This transform cannot invent new
+information; the result of applying $U$ is still $R$-dimensional, it is just a
+$R$-dimensional subspace embedded in a $N$-dimensional space.
+
+It is this `necking' into a $R$-dimensional space that shows up if the matrix
+$A$ is invertible in and of itself. If $R < M$ information will be lost and so
+the matrix could never be invertible.
 
 \end{document}
 
