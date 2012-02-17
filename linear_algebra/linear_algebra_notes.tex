@@ -1,9 +1,7 @@
 \documentclass[a4paper]{article}
-\usepackage{xcolor,geometry,palatino}
-
+\usepackage{xcolor,geometry,graphicx,palatino}
 \addtolength{\parskip}{0.5\baselineskip}
 \setlength{\parindent}{0pt}
-%\geometry{hmargin=0.75in,vmargin=1in}
 
 \title{Notes on Linear Algebra}
 \author{Rich Wareham}
@@ -343,16 +341,15 @@ Consider the form of the matrices $A^TA$ and $AA^T$:
 \]
 If we make the observation that we may set $\Sigma^T \Sigma = \Lambda_V$ and
 $\Sigma \Sigma^T = \Lambda_U$ then we have exactly the eigenvector
-decomposition.
+decomposition. Further, since $\Lambda_U = \Lambda_V = \Lambda$, then we can see
+that \highlight{$\Sigma$ is the $R \times R$ diagonal matrix of eigenvalue
+square-roots}.
 
 The decomposition $A = U \Sigma V^T$ is called the \emph{singular value
 decomposition} (SVD). \highlight{The columns of the matrices $U$ and $V$ are the
 eigenvectors of $AA^T$ and $A^TA$ respectively} ordered by decreasing
-eigenvalue. \highlight{The diagonal elements of $\Sigma$ are the square-roots of
-the eigenvalues of $AA^T$ or $A^TA$}, they are identical, again arranged in
-decreasing order diagonally. The non-zero elements of $\Sigma$ are called the
-singular values and \highlight{the number of singular values is equal to the
-rank of $A$}.
+eigenvalue. The non-zero elements of $\Sigma$ are called the singular values and
+\highlight{the number of singular values is equal to the rank of $A$}.
 
 \subsubsection{The geometric interpretation of the SVD}
 
@@ -369,6 +366,36 @@ $R$-dimensional subspace embedded in a $N$-dimensional space.
 It is this `necking' into a $R$-dimensional space that shows up if the matrix
 $A$ is invertible in and of itself. If $R < M$ information will be lost and so
 the matrix could never be invertible.
+
+\subsubsection{Matrix approximation}
+
+\begin{figure}[p]
+  \begin{centering}
+    \begin{tabular}{cc}
+      \includegraphics[width=0.4\columnwidth]{svd_original} &
+      \includegraphics[width=0.4\columnwidth]{svd_50} \\
+      Original (100\% storage) & 50\% of s.v.s (82\% storage)\\[1em]
+      \includegraphics[width=0.4\columnwidth]{svd_25} &
+      \includegraphics[width=0.4\columnwidth]{svd_10} \\
+      25\% of s.v.s (41\% storage) & 10\% of s.v.s (16\% storage)\\[1em]
+      \includegraphics[width=0.4\columnwidth]{svd_5} &
+      \includegraphics[width=0.4\columnwidth]{svd_1} \\
+      5\% of s.v.s (8\% storage) & 1\% of s.v.s (2\% storage)\\[1em]
+    \end{tabular} \\
+  \end{centering}
+  \caption{\label{fig:svd-truncation}An example of truncating the singular
+  values in the SVD. Under each image is shown the number of singular values
+  (s.v.s) retained and the corresponding amount of storage required for the
+  image as a fraction of the original.}
+\end{figure}
+
+The SVD may be used to approximate a matrix. Instead of retaining the full $R$
+diagonal entries of $\Sigma$, we may truncate the matrix and keep only the first
+$R' < R$ entries of $\Sigma$ and the first $R'$ columns of $U$ and $V$. Figure
+\ref{fig:svd-truncation} gives an example of this so-called \emph{rank
+reduction} applied to a matrix representing an image. The SVD can be used as a
+na\"ive form of image compression; we managed to get to around 16\% of the
+original image's storage by setting $R' = 0.1 R$.
 
 \end{document}
 
