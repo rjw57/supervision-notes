@@ -1,0 +1,303 @@
+\documentclass[a4paper]{article}
+\usepackage{xcolor,geometry,palatino}
+
+\geometry{hmargin=0.75in,vmargin=1in}
+
+\title{Notes on Linear Algebra}
+\author{Rich Wareham}
+
+\newcommand{\hmatrixrule}{\rule[0.5ex]{2em}{0.7pt}}
+\newcommand{\vmatrixrule}{\rule[-0.5ex]{0.7pt}{1.5em}}
+\newcommand{\highlight}[1]{{\color{blue}#1}}
+
+\begin{document}
+\maketitle
+
+\section{Matrix vector multiplication}
+
+\subsection{Left-multiplication}
+
+A $1 \times N$ vector, $\vec{x}$, multiplied by a $N \times M$ matrix, $A$,
+gives a $1 \times M$ vector which is the dot product of $\vec{x}$ with the
+\emph{columns} of $A$.
+
+\[
+\begin{array}{cccc}
+\left[ \begin{array}{cccc} x_1 & x_2 & \cdots & x_N \end{array} \right] &
+\left[
+	\begin{array}{cccc}
+		\vmatrixrule & \vmatrixrule &  & \vmatrixrule \\[1ex]
+		\vec{a}_1 & \vec{a}_2 & \cdots & \vec{a}_M \\[1ex]
+		\vmatrixrule & \vmatrixrule &  & \vmatrixrule 
+	\end{array}
+\right] &
+= &
+\left[ \begin{array}{cccc}
+	\vec{x} \cdot \vec{a}_1 & \vec{x} \cdot \vec{a}_2 & \cdots & \vec{x} \cdot \vec{a}_M
+      \end{array} \right] 
+\\
+\rule{0pt}{2em} 1 \times N & N \times M & \rightarrow & 1 \times M
+\end{array}
+\]
+
+\subsection{Right-multiplication}
+
+A $N \times M$ matrix, $A$, multiplied by a $M \times 1$ vector, $\vec{x}$,
+gives a $N \times 1$ vector which is the dot product of $\vec{x}$ with the
+\emph{rows} of $A$.
+
+\[
+\begin{array}{cccc}
+\left[
+	\begin{array}{ccc}
+		\hmatrixrule & \vec{a}_1 & \hmatrixrule \\
+		\hmatrixrule & \vec{a}_2 & \hmatrixrule \\
+		            & \vdots & \\
+		\hmatrixrule & \vec{a}_N & \hmatrixrule
+	\end{array}
+\right] &
+\left[
+	\begin{array}{c}
+		x_1 \\ x_2 \\ \vdots \\ x_M
+	\end{array}
+\right] &
+= &
+\left[
+	\begin{array}{c}
+		\vec{x} \cdot \vec{a}_1 \\ \vec{x} \cdot \vec{a}_2 \\ \vdots \\ \vec{x} \cdot \vec{a}_N
+	\end{array}
+\right]
+\\
+\rule{0pt}{2em} N \times M & M \times 1 & \rightarrow & N \times 1
+\end{array}
+\]
+
+\section{The four fundamental subspaces}
+
+\subsection{The row space}
+
+The row space of a $N \times M$ matrix, $A$, is \highlight{the $M$-component space
+spanned by the \emph{rows} of $A$}. If $\vec{x}$ is in the row space of $A$
+then at least one of $\vec{x} \cdot \vec{a}_i$, where $\vec{a}_i$ is a row of
+$A$, \emph{must} be non-zero by definition. \highlight{The \emph{dimension} of the row
+space is equal to the rank of the matrix.}
+
+\subsection{The null space}
+
+The null space of a $N \times M$ matrix, $A$, is the \highlight{$M$-component} space of
+vectors, $\vec{x}$, for which \highlight{$A\vec{x} = \vec{0}$}. Looking at our
+definition of the row space, it is clear that if a vector is in the row space
+it \emph{cannot} be in the null space and \emph{vice versa}. Therefore the row
+space is the \emph{compliment} of the row space.
+
+\subsection{The column space}
+
+The column space of a $N \times M$ matrix, $A$, is \highlight{the $N$-component
+space spanned by the \emph{columns} of $A$}. If $\vec{x}$ is in the column
+space of $A$ then at least one of $\vec{x} \cdot \vec{a}_i$, where $\vec{a}_i$
+is a column of $A$, \emph{must} be non-zero by definition. \highlight{The
+\emph{dimension} of the column space is equal to the rank of the matrix.}
+
+\subsection{The left null space}
+
+The left null space of a $N \times M$ matrix, $A$, is the \highlight{$N$-component}
+space of vectors, $\vec{x}$, for which \highlight{$\vec{x}^TA = \vec{0}^T$}. Looking
+at our definition of the column space, it is clear that if a vector is in the
+column space it \emph{cannot} be in the left null space and \emph{vice versa}.
+Therefore the column space is the \emph{compliment} of the left null space.
+
+\section{Matrix-matrix multiplication}
+
+Like matrix-vector multiplication, it is best to think of this as a set of
+row-wise and column-wise operations.
+
+\[
+\begin{array}{cccc}
+\left[
+	\begin{array}{ccc}
+		\hmatrixrule & \vec{a}_1 & \hmatrixrule \\
+		\hmatrixrule & \vec{a}_2 & \hmatrixrule \\
+		            & \vdots & \\
+		\hmatrixrule & \vec{a}_N & \hmatrixrule
+	\end{array}
+\right] &
+\left[
+	\begin{array}{cccc}
+		\vmatrixrule & \vmatrixrule &  & \vmatrixrule \\[1ex]
+		\vec{b}_1 & \vec{b}_2 & \cdots & \vec{b}_M \\[1ex]
+		\vmatrixrule & \vmatrixrule &  & \vmatrixrule 
+	\end{array}
+\right] &
+= &
+\left[
+	\begin{array}{cccc}
+\vec{a}_1 \cdot \vec{b}_1 & \vec{a}_1 \cdot \vec{b}_2 & \cdots & \vec{a}_1 \cdot \vec{b}_M \\
+\vec{a}_2 \cdot \vec{b}_1 & \vec{a}_2 \cdot \vec{b}_2 & \cdots & \vec{a}_2 \cdot \vec{b}_M \\
+\vdots & \vdots & \ddots & \vdots \\
+\vec{a}_N \cdot \vec{b}_1 & \vec{a}_N \cdot \vec{b}_2 & \cdots & \vec{a}_N \cdot \vec{b}_M 
+	\end{array}
+\right]
+\\
+\rule{0pt}{2em} N \times L & L \times M & \rightarrow & N \times M
+\end{array}
+\]
+
+\subsection{Orthonormal matrices}
+
+An orthonormal matrix is one where all columns are \highlight{independent} and
+\highlight{have unit length}. If $\{ \vec{a}_i : i \in 1 \dots M \}$ are the
+columns of an orthonormal matrix then it follows from the definition that
+\highlight{\[
+  \vec{a}_i \cdot \vec{a}_i = 1, \quad \vec{a}_i \cdot \vec{a}_j = 0 \qquad
+  \forall i, j \in 1 \dots M.
+\]}
+By using this result and looking at our representation of matrix-matrix
+multiplication above it should be clear that, if $Q$ is an orthonormal matrix,
+$Q^TQ = I$ and hence \highlight{the transpose of an orthonormal matrix is its
+inverse}.
+
+Further, if $Q^T$ is the inverse of $Q$, then $QQ^T = I$ and hence $Q^T$ must
+itself be orthonormal. Since, by definition of an orthonormal matrix, the columns
+of $Q^T$ are independent and have unit length then it follows that
+\highlight{the rows of an orthonormal matrix are \emph{also} independent and
+unit length}.
+
+\section{Eigenvalues and eigenvectors}
+
+An \emph{eigenvector}, $\vec{v}$, of some \highlight{square matrix}, $A$, is
+defined to be any vector for which \highlight{$A \vec{v} = \lambda \vec{v}$}. By
+\emph{convention} we choose that \highlight{eigenvectors have unit length}
+although we are in general free to choose the length of eigenvectors. The value
+$\lambda$ is an \emph{eigenvalue} of the matrix, $A$.  \highlight{We do not
+consider the vector $\vec{0}$ to be an eigenvector} of a matrix since it
+trivially satisfies the requirements for all square matrices.
+
+A \emph{left-eigenvector} of some square matrix, $A$, is a vector, $\vec{v}$,
+which satisfies \highlight{$\vec{v}^T A = \lambda \vec{v}^T$}. It is obvious
+that \highlight{the eigenvectors of a matrix are the left-eigenvectors of its
+transpose}.
+
+\subsection{Eigenvectors of symmetric matrices}
+
+In general eigenvectors need not be orthogonal to each other but there is a
+special case where they are. Suppose the square matrix, $A$, is symmetric so
+that $A^T = A$. In this case the left-eigenvectors and left-eigenvalues are the
+same as the eigenvectors and eigenvalues.
+
+Suppose two eigenvectors, $\vec{e}_1$ and $\vec{e}_2$ with associated
+eigenvalues $\lambda_1$ and $\lambda_2$, were non-orthogonal. In which case, we
+could represent one as some offset from the other: $\vec{e}_2 = \alpha \vec{e}_1
++ \vec{\Delta}$ where $\vec{e}_1 \cdot \vec{\Delta} = 0$.  Now consider
+multiplying $A$ on the right be $\vec{e}_2$:
+
+\begin{centering}
+\parbox{0.3\columnwidth}{\centering
+\begin{eqnarray}
+  A \vec{e}_2 &=& \lambda_2 \vec{e}_2 \nonumber \\
+  &=& \lambda_2 \alpha \vec{e}_1 + \lambda_2 \vec{\Delta} \label{eqn:res-1}
+\end{eqnarray}\\
+}\parbox{0.3\columnwidth}{\centering
+\begin{eqnarray}
+  A \vec{e}_2 &=& A \vec{e}_1 + A \vec{\Delta} \nonumber \\
+  &=& \lambda_1 \vec{e}_1 + A \vec{\Delta} \label{eqn:res-2}
+\end{eqnarray}\\
+}\\
+\end{centering}
+
+By (\ref{eqn:res-1}), (\ref{eqn:res-2}) and the orthogonality of $\vec{e}_1$ and
+$\vec{\Delta}$ it follows that $A\vec{\Delta} = \lambda_2 \vec{\Delta}$.  Hence,
+by definition, $\vec{e}_2 = \vec{\Delta}$ and is orthogonal to $\vec{e}_1$.
+
+This is a sketch proof and is non-rigorous but provides a justification for the
+claim that \highlight{the eigenvectors of a symmetric matrix are orthogonal}. A
+rigorous proof adds the condition that the matrix be of a form known as positive
+semi-definite but this is beyond the scope of the course.
+
+\subsection{Relation to the fundamental subspaces of a matrix}
+
+Looking at the definition of right-multiplication above it should be clear that
+if a \emph{non-zero} vector $\vec{b}$ can be expressed via another vector
+$\vec{x}$ applied to $A$ so that $A\vec{x} = \vec{b}$ then $\vec{x}$ is in the
+row space of the matrix. In other words, $\vec{x}$ is non-orthogonal to at
+least one row of $A$ since $\vec{b}$ has at least one non-zero component.a
+By a similar argument, if $\vec{x}^T A = \vec{b}^T$ and $\vec{b}$ is non-zero,
+then $\vec{x}$ must be in the \emph{column space} of $A$.
+
+It follows that \highlight{all eigenvectors of a square matrix must be in the
+row space} and \highlight{all left-eigenvectors of a square matrix must be in
+the column space}. Since, for a symmetric matrix, the left-eigenvectors are the
+same as the eigenvectors, \highlight{for a symmetric matrix, the eigenvectors
+must lie in \emph{both} the column space and the row space}.
+
+As the eigenvectors for a symmetric matrix must be orthogonal and are by
+convention unit length, it may be no surprise to you that \highlight{the
+eigenvectors of a symmetric matrix form an orthonormal basis for the row and
+column spaces}. It is instructive to attempt to show this. It may be done quite
+simply using a similar method to that used to show the orthogonality of
+a symmetric matrix's eigenvectors above: consider some vector composed of
+multiples of the eigenvectors and a remainder term orthogonal to all
+eigenvectors and then right-multiply the matrix by it.
+
+Since the eigenvectors of a symmetric basis span the column and row spaces and
+since they are orthonormal, it should be cleat that \highlight{the number of
+eigenvectors for a symmetric matrix equals its rank}.
+
+\subsection{The eigenvector decomposition}
+
+Consider some $N \times M$ matrix, $A$. We can form two symmetric matrices from
+it: the $N \times N$ matrix $AA^T$ and the $M \times M$ matrix $A^TA$. If $V$ is
+a matrix whose columns are eigenvectors of $A^TA$ and $U$ is a matrix whose
+columns are eigenvectors of $AA^T$ then, by definition,
+\[
+  A^TA V = V \Lambda_V, \qquad AA^T U = U \Lambda_U,
+\]
+where $\Lambda_V$ and $\Lambda_U$ are matrices whose diagonal elements
+containing the appropriate eigenvalues. Since we know that $V$ and $U$ are
+orthonormal, their inverses must be their own transpose and so we can rearrange
+the above as follows:
+\[
+  \highlight{A^TA = V \Lambda_V V^T, \qquad AA^T = U \Lambda_U U^T}.
+\]
+This is called the \emph{eigenvector decomposition} of $A$. It is perhaps
+unsurprising that it can be shown that \highlight{the eigenvalues of $AA^T$ and
+$A^TA$ are identical} and hence we can choose the ordering of $U$ and $V$ so as
+to make the diagonal terms of $\Lambda_U$ and $\Lambda_V$ identical. The way
+this is done is that, conventionally, \highlight{the columns of $U$ and $V$ are
+ordered by decreasing eigenvalue}.
+
+We have carefully avoided specifying the size of $\Lambda_U$ and $\Lambda_V$.
+Since the eigenvalues of $A^TA$ and $AA^T$ are equal, the \emph{rank} of $A^TA$
+must be equal to that of $AA^T$. Let this rank be $R$. If the rank is $R$, there
+are $R$ eigenvectors and so \highlight{$\Lambda_V$ and $\Lambda_U$ are $R \times
+R$}.
+
+\subsection{The singular value decomposition}
+
+For the moment, suppose that there is some decomposition of an $N \times M$
+matrix $A$ into a $N \times R$ orthogonal matrix $U$, a $M \times R$ matrix $V$
+and some $R \times R$ matrix $\Sigma$ whose only non-zero terms are on the
+diagonal:
+\[
+  \highlight{A = U \Sigma V^T}.
+\]
+Consider the form of the matrices $A^TA$ and $AA^T$:
+\[
+  A^TA = V \Sigma^T U U^T \Sigma V^T = V \Sigma^T \Sigma V^T, \qquad
+  AA^T = U \Sigma V^T V \Sigma^T U = U \Sigma \Sigma^T U^T.
+\]
+If we make the observation that we may set $\Sigma^T \Sigma = \Lambda_V$ and
+$\Sigma \Sigma^T = \Lambda_U$ then we have exactly the eigenvector
+decomposition.
+
+The decomposition $A = U \Sigma V^T$ is called the \emph{singular value
+decomposition}. \highlight{The columns of the matrices $U$ and $V$ are the
+eigenvectors of $AA^T$ and $A^TA$ respectively} ordered by decreasing
+eigenvalue. \highlight{The diagonal elements of $\Sigma$ are the square-roots of
+the eigenvalues of $AA^T$ or $A^TA$}, they are identical, again arranged in
+decreasing order diagonally. The non-zero elements of $\Sigma$ are called the
+singular values and \highlight{the number of singular values is equal to the
+rank of $A$}.
+
+\end{document}
+
+% vim:sw=2:sts=2:autoindent:tw=80
